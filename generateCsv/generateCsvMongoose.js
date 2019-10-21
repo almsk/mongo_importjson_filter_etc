@@ -8,6 +8,22 @@ mongoose.connect("mongodb://localhost:27017/airquality", {
 });
 const Aqmpoint = require("./Aqmpoint");
 (async() => {
-    const allpoints = await Aqmpoint.find();
+    const allpoints = await Aqmpoint.find({'aqm.noxevent': {$gte: 50}});
     console.log("XXX", allpoints);
+    let CSVstring = `System Time, Nox\n`;
+    allpoints.map(row => {
+        CSVstring += `${row.gps.system_time},${row.aqm.noxevent}\n`
+        
+    })
+    const fs = require('fs');
+
+fs.writeFile("export.csv", CSVstring, function(err) {
+
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log(CSVstring);
+}); 
+   
 })()

@@ -8,9 +8,9 @@ const AirqualitySchema = new mongoose.Schema({
         r2000: Number,
         coevent: Number
     },
-    qps: {
+    gps: {
         system_time: String,
-        qps_time: String,
+        gps_time: String,
         latitude: String,
         longitude: String
     }
